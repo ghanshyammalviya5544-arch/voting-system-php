@@ -1,7 +1,3 @@
 <?php
-
-
-    $connect = mysqli_connect("localhost","root","","voting") or die("connection failed");
-    
-
+$connect = mysqli_connect("tramway.proxy.rlwy.net", "root", "YejYiqctNbkMpRfXvuxnqwCxEPovdcmZ", "railway", "15201") or die("connection failed");
 ?>
