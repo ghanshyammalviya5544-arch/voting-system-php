@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+    <title>OTP Verification</title>
+</head>
+
+<body>
+<center>
+
+```
+<h2>OTP Verification</h2>
+
+<!-- OTP Form -->
+<form action="../api/verify_otp.php" method="post">
+    <input type="number" name="otp" placeholder="Enter OTP" required>
+    <br><br>
+    <button type="submit">Verify OTP</button>
+</form>
+
+<br>
+
+<!-- Timer -->
+<p id="timer">Resend OTP in 30s</p>
+
+<!-- Resend Button -->
+<button id="resendBtn" onclick="resendOTP()" disabled>Resend OTP</button>
+```
+
+</center>
+
+<script>
+let timeLeft = 30;
+let timer = document.getElementById("timer");
+let resendBtn = document.getElementById("resendBtn");
+
+// Countdown Timer
+let countdown = setInterval(() => {
+    timeLeft--;
+    timer.innerHTML = "Resend OTP in " + timeLeft + "s";
+
+    if(timeLeft <= 0){
+        clearInterval(countdown);
+        timer.innerHTML = "You can resend OTP now";
+        resendBtn.disabled = false;
+    }
+}, 1000);
+
+// Resend OTP Function
+function resendOTP(){
+    fetch("../api/resend_otp.php")
+    .then(response => response.text())
+    .then(data => {
+        alert("OTP Sent Again!");
+
+        // Reset timer
+        timeLeft = 30;
+        resendBtn.disabled = true;
+
+        countdown = setInterval(() => {
+            timeLeft--;
+            timer.innerHTML = "Resend OTP in " + timeLeft + "s";
+
+            if(timeLeft <= 0){
+                clearInterval(countdown);
+                timer.innerHTML = "You can resend OTP now";
+                resendBtn.disabled = false;
+            }
+        }, 1000);
+    });
+}
+</script>
+
+</body>
+</html>
